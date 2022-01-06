@@ -16,6 +16,7 @@ import VNode, { createEmptyVNode } from '../vdom/vnode'
 
 import { isUpdatingChildComponent } from './lifecycle'
 
+// eslint-disable-next-line no-undef
 export function initRender (vm: Component) {
   vm._vnode = null // the root of the child tree
   vm._staticTrees = null // v-once cached trees
@@ -39,25 +40,30 @@ export function initRender (vm: Component) {
 
   /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-mixed-operators
     defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, () => {
-      !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
+      !isUpdatingChildComponent && warn('$attrs is readonly.', vm)
     }, true)
     defineReactive(vm, '$listeners', options._parentListeners || emptyObject, () => {
-      !isUpdatingChildComponent && warn(`$listeners is readonly.`, vm)
+      !isUpdatingChildComponent && warn('$listeners is readonly.', vm)
     }, true)
   } else {
+    // eslint-disable-next-line no-mixed-operators
     defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true)
     defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true)
   }
 }
 
+// eslint-disable-next-line no-undef
 export let currentRenderingInstance: Component | null = null
 
 // for testing only
+// eslint-disable-next-line no-undef
 export function setCurrentRenderingInstance (vm: Component) {
   currentRenderingInstance = vm
 }
 
+// eslint-disable-next-line no-undef
 export function renderMixin (Vue: Class<Component>) {
   // install runtime convenience helpers
   installRenderHelpers(Vue.prototype)
@@ -67,6 +73,7 @@ export function renderMixin (Vue: Class<Component>) {
   }
 
   Vue.prototype._render = function (): VNode {
+    // eslint-disable-next-line no-undef
     const vm: Component = this
     const { render, _parentVnode } = vm.$options
 
@@ -90,7 +97,7 @@ export function renderMixin (Vue: Class<Component>) {
       currentRenderingInstance = vm
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
-      handleError(e, vm, `render`)
+      handleError(e, vm, 'render')
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
@@ -98,7 +105,7 @@ export function renderMixin (Vue: Class<Component>) {
         try {
           vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
         } catch (e) {
-          handleError(e, vm, `renderError`)
+          handleError(e, vm, 'renderError')
           vnode = vm._vnode
         }
       } else {
